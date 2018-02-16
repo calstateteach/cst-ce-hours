@@ -1,0 +1,37 @@
+doctype html
+html(lang='en')
+  head
+    title Teacher Candidates
+    STYLE.
+      table, th, td { border: 1px solid black; border-collapse: collapse;}
+      th, td { padding: 3px; }
+  body
+    H1 Teacher Candidates
+    P
+      A(HREF= APP_URL + 'admin') Admin
+      |  | 
+      A(HREF= APP_URL + 'admin/requests') View Approval Requests
+      |  | 
+      A(HREF= APP_URL + 'admin/linktests') Link Tests
+    P #{data.length} records read from <A HREF="#{process.env.MENTOR_LIST_URL}">#{process.env.MENTOR_LIST_URL}</A>
+    FORM(ACTION='reloadCam' METHOD='POST')
+      INPUT(TYPE='submit' value='Reload CAM data')
+    P Click email button to use Teacher Candidate site as that candidate.
+    if data.length > 0
+      TABLE
+        TR
+          TH Candidate name
+          TH Candidate email
+          TH Mentor name
+          TH Mentor email
+        each row in data
+          TR
+            TD= row.first_name + ' ' + row.last_name
+            TD
+              FORM(action= "impersonate" method="post")
+                INPUT(type='hidden' name='first_name' value=row.first_name)
+                INPUT(type='hidden' name='last_name' value=row.last_name)
+                INPUT(type='hidden' name='email' value=row.email)
+                INPUT(type='submit' value=row.email)
+            TD= row.mentor_first_name + ' ' + row.mentor_last_name
+            TD= row.mentor_email

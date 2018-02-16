@@ -1,0 +1,17 @@
+doctype html
+HTML(lang="en")
+  HEAD
+    TITLE LTI Launch Test
+    link(rel="stylesheet" type="text/css" href=APP_URL + "LatoLatin/latolatinfonts.css")
+    LINK(rel="stylesheet" type="text/css" href=APP_URL + "styles.css")
+  BODY
+    H1 LTI Launch Test
+    A(HREF=APP_URL + "candidate/submitHours") Continue to CE hours entry
+    TABLE.data
+      TR
+        TH Key
+        TH Value
+      each val, key in body
+        TR
+          TD= key
+          TD= val

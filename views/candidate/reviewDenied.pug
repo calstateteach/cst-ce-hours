@@ -1,0 +1,16 @@
+extends candidateLayout.pug
+block content
+  H2 Denied Approval Requests
+  if data.length > 0
+    P These are approval requests denied by the mentor and requiring edits before re-submitting.
+    TABLE.data
+      TR
+        TH Request Date
+        TH
+      for row in data
+        TR
+          TD= row.timestamp.toLocaleString()
+          TD
+            A(HREF= './viewDenied/' + row.requestHash) View
+  else
+    P There are no denied approval requests.

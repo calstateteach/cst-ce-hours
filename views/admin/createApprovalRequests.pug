@@ -1,0 +1,35 @@
+doctype html
+HTML(lang="en")
+  HEAD
+    LINK(rel="stylesheet" type="text/css" href=APP_URL + "styles.css")
+    LINK(rel="stylesheet" type="text/css" href=APP_URL + "LatoLatin/latolatinfonts.css")
+    TITLE Create Approval Requests
+  BODY
+
+    H1 Create Approval Requests
+    P
+      A(HREF= APP_URL + 'admin') Admin
+      |  | 
+      A(HREF= APP_URL + 'admin/requests') View Approval Requests
+      |  | 
+      A(HREF= APP_URL + 'admin/linktests') Link Tests
+      |  | 
+      A(HREF= APP_URL + 'admin/impersonate') Impersonate
+    P Use this page to generate a new batch of approval requests.
+    FORM(action="createApprovalRequests" method="post")
+      INPUT(type='submit' value="Create Approval Requests")
+    if data
+      P #[B #{data.length}] approval requests created #{new Date().toLocaleString()}.
+      if data.length > 0
+      TABLE.data
+        TR
+          TH Mentor name
+          TH Mentor email
+          TH Candidate name
+          TH Candidate email
+        for row in data
+          TR
+            TD= row.mentorFullName
+            TD= row.mentorEmail
+            TD= row.candidateFullName
+            TD= row.candidateEmail

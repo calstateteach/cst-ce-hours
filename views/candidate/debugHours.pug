@@ -1,0 +1,25 @@
+extends candidateLayout.pug
+block content
+  H2 Debug CE Hours
+  P Record count: #{data.length}
+  if data.length > 0
+    TABLE.data
+      TR
+        TH ID
+        TH State
+        TH Date
+        TH Activity
+        TH Duration
+        TH Other participants
+        TH Candidate type
+        TH Approval request ID
+      for row in data
+        TR
+          TD= row._id
+          TD= row.approvalState
+          TD= row.activityDate.toLocaleDateString()
+          TD= row.activityDescription
+          TD= row.activityDurationAsString
+          TD= row.otherParticipants
+          TD= row.candidateType
+          TD= row.approvalRequestId

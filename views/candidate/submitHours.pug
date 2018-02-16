@@ -1,0 +1,7 @@
+extends candidateLayout.pug
+block append head
+  LINK(rel="stylesheet" type="text/css" href=APP_URL + "datepickr/datepickr.min.css")
+block content
+  H2 Enter CE Hours
+  FORM(id='layoutForm' action='./submitHours' method='POST')
+    include HoursFormFields

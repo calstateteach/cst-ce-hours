@@ -1,0 +1,109 @@
+doctype html
+html(lang='en')
+  head
+    title CE Verification Link Test
+    STYLE.
+      table, th, td { border: 1px solid black; border-collapse: collapse;}
+      th, td { padding: 3px; }
+  body
+    H1 CE Verification Link Test
+    P
+      A(HREF= APP_URL + 'admin') Admin
+      |  | 
+      A(HREF= APP_URL + 'admin/requests') View Approval Requests
+      |  | 
+      A(HREF= APP_URL + 'admin/impersonate') Impersonate
+    P #{data.length} requests
+    BUTTON(onclick= 'window.location.reload(true);') Refresh page
+
+    H1 #{pendingRequests.length} Pending Requests
+    if data.length > 0
+      TABLE
+        TR
+          TH Created
+          TH Mentor
+          TH Candidate
+          TH Candidate Email
+          TH View Link
+          TH Approval Form Link
+        each row in pendingRequests
+          TR
+            TD= row.timestamp.toLocaleString()
+            TD= row.mentorFullName
+            TD= row.candidateFullName
+            TD= row.candidateEmail
+            TD
+              A(HREF= `${APP_URL}links/requestDetail/${row.requestHash}`) View
+            TD
+              A(HREF= `${APP_URL}links/approveform/${row.mentorSecret}`) Approval form
+
+    H1 #{approvedRequests.length} Approved Requests
+    if approvedRequests.length > 0
+      TABLE
+        TR
+          TH Mentor
+          TH Candidate
+          TH Candidate Email
+          TH View Link
+
+        each row in approvedRequests
+          TR
+            TD= row.mentorFullName
+            TD= row.candidateFullName
+            TD= row.candidateEmail
+            TD
+              A(HREF= `${APP_URL}links/requestDetail/${row.requestHash}`) View
+              //- var linkUrl = APP_URL + 'requestDetailView/' + row.requestHash;
+              //-A(HREF= `requestDetailView/${row.requestHash}`)= linkUrl
+
+
+    H1 #{deniedRequests.length} Denied Requests
+    if deniedRequests.length > 0
+      TABLE
+        TR
+          TH Mentor
+          TH Candidate
+          TH Candidate Email
+          TH View Link
+        each row in data
+          if (row.approvalState === 'Denied')
+            TR
+              TD= row.mentorFullName
+              TD= row.candidateFullName
+              TD= row.candidateEmail
+              TD
+                A(HREF= `${APP_URL}links/requestDetail/${row.requestHash}`) View
+                //- var linkUrl = APP_URL + 'requestDetailView/' + row.requestHash;
+                //-A(HREF= `requestDetailView/${row.requestHash}`)= linkUrl
+
+    H1 #{revisedRequests.length} Revised Requests
+    if revisedRequests.length > 0
+      TABLE
+        TR
+          TH Mentor
+          TH Candidate
+          TH Candidate Email
+          TH Detail
+        each row in revisedRequests
+          TR
+            TD= row.mentorFullName
+            TD= row.candidateFullName
+            TD= row.candidateEmail
+            TD
+              A(HREF= `${APP_URL}links/requestDetail/${row.requestHash}`) View
+
+    H1 #{rolledRequests.length} Rolled Over Requests
+    if rolledRequests.length > 0
+      TABLE
+        TR
+          TH Mentor
+          TH Candidate
+          TH Candidate Email
+          TH Detail
+        each row in rolledRequests
+          TR
+            TD= row.mentorFullName
+            TD= row.candidateFullName
+            TD= row.candidateEmail
+            TD
+              A(HREF= `${APP_URL}links/requestDetail/${row.requestHash}`) View

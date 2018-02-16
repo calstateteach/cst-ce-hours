@@ -1,0 +1,29 @@
+doctype html
+HTML(lang="en")
+  HEAD
+    TITLE CE Verification Admin
+  BODY
+    H1 CE Verification Admin
+    UL
+      LI
+        A(HREF= APP_URL + 'admin/requests') Approval Requests
+      LI
+        A(HREF= APP_URL + 'admin/linktests') Link Test
+      LI
+        A(HREF= APP_URL + 'admin/impersonate') Impersonate Teacher Candidate
+      LI 
+        A(HREF= APP_URL + 'candidate/submitHours') Teacher Candidate
+      //-LI 
+        //-A(HREF= APP_URL + 'mentor') Mentor Request Approvals
+      LI 
+        A(HREF= APP_URL + 'admin/createApprovalRequests') Create Approval Requests
+      LI
+        A(HREF= APP_URL + 'admin/mailMergeApprovalRequests') Mail Merge Approval Requests
+      LI Emails sent to mentors requesting approvals
+      LI Emails sent to candidates to review denied 
+      LI Emails sent to faculty regarding denied approvals
+      LI
+        A(HREF= APP_URL + 'admin/viewSession') View session
+      LI
+        A(HREF= APP_URL + 'admin/clearSession') Clear session
+    SMALL=(new Date()).toString()

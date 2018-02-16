@@ -1,0 +1,23 @@
+extends requestTemplate
+
+block content_heading
+  H1 CE Verification Denial
+
+  P Please include a reason for not approving the following CE hours. Your comments will be available to the teacher candidate.
+
+  FORM(id="denyform", action="../deny/" + data.mentorSecret, method="POST")
+    TABLE
+      TR
+        TD.labelClass Comments:
+        TD
+          TEXTAREA(type="textarea", rows="4", cols="50", name="comment")
+      if (err)
+        TR
+          TD
+          TD.errorClass A reason for the denial is required.
+      TR
+        TD
+        TD
+          INPUT(type="submit", value="Submit verification denial")
+
+block content_foot

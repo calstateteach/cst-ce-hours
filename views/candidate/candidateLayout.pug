@@ -1,0 +1,61 @@
+doctype html
+HTML(lang="en")
+  HEAD
+    block head
+      TITLE Teacher Candidate Home
+      //-meta(name="viewport" content="width=device-width")
+      link(rel="stylesheet" type="text/css" href=APP_URL + "LatoLatin/latolatinfonts.css")
+      LINK(rel="stylesheet" type="text/css" href=APP_URL + "styles.css")
+  BODY
+    DIV.header
+      H1 Teacher Candidate Dashboard
+      P Clinical Experience Hours for #[B #{session.fullName}] (#{session.email})
+    DIV.content
+      DIV.leftSide
+        UL(STYLE="padding-left: 20px")
+          LI 
+            A(HREF= APP_URL + 'candidate/submitHours') Enter CE hours
+          LI
+            A(HREF= APP_URL + 'candidate/viewHours') View entered hours
+          LI
+            A(HREF= APP_URL + 'candidate/viewPending') View pending approvals
+          LI
+            A(HREF= APP_URL + 'candidate/viewDenied') View denied hours
+          LI
+            A(HREF= APP_URL + 'candidate/viewRevised') View revised approvals
+          LI
+            A(HREF= APP_URL + 'candidate/viewApproved') View approved hours
+        
+        P Hours Summary:
+        UL(STYLE="padding-left: 20px")
+          LI Entered: #{totals['Needy']}
+          LI Pending: #{totals['Pending']}
+          LI Denied: #{totals['Denied']}
+          LI Approved: #{totals['Approved']}
+
+        if session.userAuthMethod === 'admin_login'
+          P Admin
+          UL
+            LI
+              A(HREF= APP_URL + 'admin') Admin
+            LI
+              A(HREF= APP_URL + 'candidate/debugHours') Debug hours
+            LI
+              A(HREF= APP_URL + 'admin/createApprovalRequests') Create Approval Requests
+            LI
+              A(HREF= APP_URL + 'admin/requests') View approval requests
+            LI
+              A(HREF= APP_URL + 'admin/linktests') Link tests
+            LI
+              A(HREF= APP_URL + 'admin/impersonate') Impersonate
+      DIV.rightSide
+        block content
+          P Content goes here
+
+    DIV.footer
+      //-SMALL=(new Date()).toString()
+
+    block bodybottom
+      //-Scripts executed at the end of the body can go here.
+
+

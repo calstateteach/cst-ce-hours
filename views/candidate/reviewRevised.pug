@@ -1,0 +1,18 @@
+extends candidateLayout.pug
+block content
+  H2 Revised Approval Requests
+  if data.length > 0
+    P These are approval requests denied by the mentor and then revised by the teacher candidate.
+    TABLE.data
+      TR
+        TH Request Created
+        TH Request Denied
+        TH
+      for row in data
+        TR
+          TD= row.timestamp.toLocaleString()
+          TD= row.mentorSubmitTimeStamp.toLocaleString()
+          TD
+            A(HREF= './viewRevised/' + row.requestHash) View
+  else
+    P There are no revised approval requests.

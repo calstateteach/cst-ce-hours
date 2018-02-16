@@ -1,0 +1,11 @@
+extends requestTemplate
+
+block content_heading
+  H1 CE Verification Detail
+  
+  if (data.approvalState === 'Rolled over')
+    P The following CE hours have been rolled over to a more recent approval request:
+  else
+    P Thank you for verifying the following CE hours:
+
+block content_foot

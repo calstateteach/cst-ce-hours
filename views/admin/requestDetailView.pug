@@ -1,0 +1,99 @@
+doctype html
+html(lang='en')
+  head
+    title CE Verification
+    STYLE.
+      th, td { padding: 3px; }
+      .borderClass { border: 1px solid black; border-collapse: collapse;}
+      .boldClass { font-weight: bold; }
+  body
+    H1 CE Verification Detail
+    //-P
+    //-  A(HREF='../requests') Back to requests list
+    TABLE
+      TR
+        TD Mentor:
+        TD.boldClass= data.mentorFullName
+      TR
+        TD Mentor email:
+        TD.boldClass= data.mentorEmail
+      TR
+        TD Candidate:
+        TD.boldClass= data.candidateFullName
+      TR
+        TD Candidate email:
+        TD.boldClass= data.candidateEmail
+    
+    P
+    TABLE.borderClass
+      TR
+        TH.borderClass Date
+        TH.borderClass Hours
+        TH.borderClass Activity
+        TH.borderClass Other participants
+
+      each activity in data.activityList
+        TR
+          TD.borderClass= activity.activityDate.toLocaleDateString()
+          TD.borderClass= activity.activityDurationAsString
+          TD.borderClass= activity.activityDescription
+          TD.borderClass= activity.otherParticipants
+    P
+    TABLE
+      TR
+        TD Total hours:
+        TD.boldClass= data.totalHours
+      TR
+        TD Created on:
+        TD.boldClass= data.timestamp.toLocaleString()
+      TR
+        TD Approval state:
+        TD.boldClass= data.approvalState
+      if (data.approvalState === 'Approved')
+        TR
+          TD= data.approvalState + ' on:'
+          TD.boldClass= data.mentorSubmitTimeStamp.toLocaleString()
+      else if (data.approvalState === 'Denied')
+        TR
+          TD= data.approvalState + ' on:'
+          TD.boldClass= data.mentorSubmitTimeStamp.toLocaleString()
+        TR
+          TD Mentor's comment:
+          TD.boldClass= data.mentorComment
+      else if (data.approvalState === 'Revised')
+        TR
+          TD Denied on:
+          TD.boldClass= data.mentorSubmitTimeStamp.toLocaleString()
+        TR
+          TD= data.approvalState + ' on:'
+          TD.boldClass= data.candidateReviseTimestamp.toLocaleString()
+        TR
+          TD Mentor's comment:
+          TD.boldClass= data.mentorComment
+      TR
+        TD Public UUID:
+        TD= data.requestHash
+      TR
+        TD Secret UUID:
+        TD= data.mentorSecret
+    P
+    TABLE
+      TR
+        TD(STYLE='vertical-align:top') Request email text body:
+        TD
+          PRE= data.requestEmailBody
+      TR
+        TD(STYLE='vertical-align:top') Request email HTML body:
+        TD
+          PRE= data.requestEmailHtml
+      TR
+        TD Request email timestamp:
+        TD= data.requestEmailTimestamp
+      TR
+        TD Request email response:
+        TD
+          PRE= data.requestEmailResponse
+      TR
+        TD Request email error:
+        TD
+          PRE= JSON.stringify(data.requestEmailError)

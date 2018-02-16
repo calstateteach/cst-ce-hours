@@ -1,0 +1,36 @@
+extends candidateLayout.pug
+block content
+  H2 Entered CE Hours
+  if data.length > 0
+    if totalHours == 1
+      P #[B 1] hour has been entered but not yet been included in any approval requests.
+    else
+      P #[B #{totalHours}] hours have been entered but not yet been included in any approval requests.
+    
+    TABLE.data
+      TR
+        TH Date
+        TH Activity
+        TH Duration
+        TH Other participants
+        TH Candidate type
+        TH(COLSPAN=2)
+      for row in data
+        TR
+          TD= row.activityDate.toLocaleDateString()
+          TD= row.activityDescription
+          TD= row.activityDurationAsString
+          TD= row.otherParticipants
+          TD= row.candidateType
+          TD
+            FORM(action= "./editHours" method="post")
+              INPUT(type='hidden' name='record_id' value=row._id)
+              INPUT(type='hidden' name='redirectUrl' value=APP_URL + 'candidate/viewHours')
+              INPUT(type='submit' value='Edit')
+          TD
+            FORM(action= "./deleteHours" method="post")
+              INPUT(type='hidden' name='record_id' value=row._id)
+              INPUT(type='hidden' name='redirectUrl' value=APP_URL + 'candidate/viewHours')
+              INPUT(type='submit' value='Delete')
+  else
+    P You have no hours entered for the next approval request.

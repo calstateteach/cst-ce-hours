@@ -1,0 +1,23 @@
+doctype html
+HTML(lang="en")
+  HEAD
+    TITLE Admin Login
+  BODY
+    H1 Login to CE Hours Admin
+    FORM(ID="loginForm" ACTION="./login" METHOD="POST")
+      TABLE
+        TR
+          TH User name:
+          TD
+            INPUT(TYPE="text" NAME="username" VALUE=defaultName)
+        TR
+          TH Password:
+          TD
+            INPUT(TYPE="password" NAME="usersecret")
+        TR
+          TD
+          TD
+            INPUT(TYPE="submit")
+
+    if err
+      H3(CLASS="errMsg")= err

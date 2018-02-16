@@ -1,0 +1,40 @@
+doctype html
+HTML(lang="en")
+  HEAD
+    LINK(rel="stylesheet" type="text/css" href=APP_URL + "styles.css")
+    LINK(rel="stylesheet" type="text/css" href=APP_URL + "LatoLatin/latolatinfonts.css")
+    TITLE Mail Merge Approval Requests
+  BODY
+
+    H1 Mail Merge Approval Requests
+    P
+      A(HREF= APP_URL + 'admin') Admin
+      |  | 
+      A(HREF= APP_URL + 'admin/requests') View Approval Requests
+      |  | 
+      A(HREF= APP_URL + 'admin/linktests') Link Tests
+      |  | 
+      A(HREF= APP_URL + 'admin/impersonate') Impersonate
+    P Use this page to do a mail merge for approval requests.
+    FORM(action="" method="post")
+      INPUT(type='submit' value="Mail merge")
+
+    H1 #{data.length} Pending Requests
+    if data.length > 0
+      TABLE.data
+        TR
+          TH Created
+          TH Candidate
+          TH Mentor
+          TH Mentor Email
+          TH Email timestamp
+          TH Detail
+        each row in data
+          TR
+            TD= row.timestamp.toLocaleString()
+            TD= row.candidateFullName
+            TD= row.mentorFullName
+            TD= row.mentorEmail
+            TD= row.requestEmailTimestamp ? row.requestEmailTimestamp.toLocaleString() : ''
+            TD
+              A(HREF= `requestDetailView/${row.requestHash}`) View

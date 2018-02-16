@@ -1,0 +1,28 @@
+CalStateTEACH student {{{candidateFullName}}} logged the following clinical
+experience for dates {{{startDate}}} through {{{endDate}}}.
+
+Please DO NOT REPLY TO THIS EMAIL. Instead, verify the details
+and click one of the links below.
+
+To view this information online, click the link below:
+https://SecretSquirrel.net/cewebdemo/links/approveform/{{mentorSecret}}
+
+Activity Date   Duration             Activity                    Other Participants
+-------------   --------             --------                    ------------------
+{{#activityList}}
+{{{activityDateDisplay}}} {{activityDurationDisplay}} {{{activityDescDisplay}}} {{{otherParticipants}}}
+{{/activityList}}
+------------------
+Total hours: {{totalHours}}
+
+
+If the information above is correct, click the link below to verify.
+https://SecretSquirrel.net/cewebdemo/links/approve/{{mentorSecret}}
+
+If the information is NOT correct, please click the link below to
+suggest corrections.
+Incorrect: https://SecretSquirrel.net/cewebdemo/links/denyform/{{mentorSecret}}
+
+Thank you,
+
+CalStateTEACH

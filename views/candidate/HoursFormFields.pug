@@ -1,0 +1,102 @@
+//-Input fields for CE Hours edit form. Include inside FORM tag.
+
+INPUT(TYPE='hidden' name='hoursId' value=data._id)
+INPUT(TYPE='hidden' name='approvalState' value=data.approvalState)
+//- This tells us where to go after submitting the form
+INPUT(type='hidden' name='redirectUrl' value=redirectUrl)
+DIV
+  LABEL Email:
+  INPUT(type='text' name='email' style="width: 20em" value=data.candidateEmail readonly)
+DIV
+  LABEL Candidate type:
+  SELECT(name='candidateType')
+    OPTION(value='Intern' SELECTED=data.candidateType == 'Intern') Intern
+    OPTION(value='StudentTeacher' SELECTED=data.candidateType == 'StudentTeacher') Student Teacher
+DIV
+  LABEL Date: (MM/DD/YYYY)
+  //-INPUT(type='text' maxlength='2' style="width: 1.5em" name='month' id='month' //-value=data.activityDate.getMonth() + 1) 
+  //-| / 
+  //-INPUT(type='text' maxlength='2' style="width: 1.5em" name='date' id='date' //-value=data.activityDate.getDate()) 
+  //-| / 
+  //-INPUT(type='text' maxlength='4' style="width: 3em" name='year' id='year' //-value=data.activityDate.getFullYear()) 
+  //-| MM/DD/YYYY
+  INPUT(type='text' class='datepickr' NAME='datepickr' ID='datepickr' value=data.activityDate.toLocaleDateString())
+DIV
+  LABEL Hours:
+  SELECT(name='hours' id='hours')
+    -
+      var durations = [
+        '30 Minutes',
+        '1 Hour',
+        '1 Hour 30 Minutes',
+        '2 Hours',
+        '2 Hours 30 Minutes',
+        '3 Hours',
+        '3 Hours 30 Minutes',
+        '4 Hours',
+        '4 Hours 30 Minutes',
+        '5 Hours',
+        '5 Hours 30 Minutes',
+        '6 Hours',
+        '6 Hours 30 Minutes',
+        '7 Hours',
+        '7 Hours 30 Minutes',
+        '8 Hours'
+      ];
+    each duration in durations
+      OPTION(value=duration selected=(data.activityDurationAsString == duration))= duration
+DIV
+  LABEL Activity:
+  SELECT(name='activity' id='activity')
+    -
+      var activities = [
+        'Class Observation',
+        'Small Group Teaching',
+        'Large Group Teaching',
+        'Solo Teaching',
+        'Co-teaching',
+        'Content Specific Coaching',
+        'Curriculum Planning',
+        'New Teacher Orientation',
+        'Coaching',
+        'Co-planning',
+        'Test Results Analysis',
+        'Observation Event',
+        'Lesson Demonstration',
+        'Videoconference',
+        'Teaching Prof. Development',
+        'ELD/SDAIE Lesson Planning',
+        'CELDT/SOLOM Data analysis',
+        'UDL Lesson Planning '
+      ];
+    each activity in activities
+      OPTION(value= activity selected=data.activityDescription == activity)= activity
+DIV
+  LABEL Other participants:
+  -
+    var participants = [
+      'CalStateTEACH Faculty',
+      'ELA Site Mentor',
+      'Site Mentor',
+      'Paraprofessional',
+      'ELD/SDAIE Specialists',
+      'SPE Specialists',
+      'Professional Learning Communication',
+      'Grade Level Teacher',
+      'Administrator',
+      'Counselor',
+      'School Psychologists',
+      'CELDT/Bilingual Coord.',
+      'Curriculum Specialists',
+      'Literacy Coach',
+    ];
+    var checkedParticipants = data.otherParticipants.split(', ');
+  each participant in participants
+    LABEL
+      INPUT(type='checkbox' name='participants' value=participant checked=checkedParticipants.includes(participant))= participant
+DIV
+  P
+  BUTTON Submit
+SCRIPT(src=APP_URL + "datepickr/datepickr.min.js")
+SCRIPT.
+  datepickr('#datepickr', { dateFormat: 'm/d/Y'});

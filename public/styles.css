@@ -1,0 +1,61 @@
+/* 2 column content layout, with header and footer */
+DIV.header {
+  width: 1079px;
+  background: AliceBlue;
+  padding: 3px 3px 3px 3px;
+}
+DIV.content {
+  width: 1085px;  /* Keep the child divs inline with each other.*/
+}
+DIV.leftSide {
+  width: 200px;
+  float:left;
+  background-color: PapayaWhip;
+  padding: 0px 15px 0px 0px;
+}
+DIV.rightSide {
+  width: 840px;
+  background-color: LightGoldenRodYellow;
+  padding: 0px 15px 5px 15px;
+  float: left;
+}
+DIV.footer {
+  width: 1079px;
+  background-color: WhiteSmoke;
+  clear: both;
+ }
+
+
+body {
+  /* margin: 0px; */
+  font-family: LatoLatinWeb, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.errMsg {
+  color: Red
+}
+
+label { display: block; }   /* Top positioned labels */
+input, select {
+  margin-bottom: 10px;
+}
+input[type="checkbox"] {  margin-bottom: 2px; }
+
+/* Data table */
+TABLE.data {
+  border-collapse: collapse;
+  font-size: smaller;
+}
+
+TABLE.data th, TABLE.data td {
+  padding: 3px;
+  border: 1px solid black;
+}
+
+TABLE.data tr.edited {
+  font-style: italic;
+  font-weight: bold;
+}
+
+
+.boldClass { font-weight: bold; }

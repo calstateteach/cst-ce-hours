@@ -1,0 +1,117 @@
+doctype html
+html(lang='en')
+  head
+    title CE Verification
+    STYLE.
+      table, th, td { border: 1px solid black; border-collapse: collapse;}
+      th, td { padding: 3px; }
+  body
+    H1 CE Verification
+    P
+      A(HREF= APP_URL + 'admin') Admin
+      |  | 
+      A(HREF= APP_URL + 'admin/linktests') Link Tests
+      |  | 
+      A(HREF= APP_URL + 'admin/impersonate') Impersonate
+    P #{data.length} requests
+    BUTTON(onclick= 'window.location.reload(true);') Refresh page
+
+    H1 #{pendingRequests.length} Pending Requests
+    if data.length > 0
+      TABLE
+        TR
+          TH Created
+          TH Mentor
+          TH Candidate
+          TH Mentor Email
+          TH Email Timestamp
+          TH Detail
+        each row in pendingRequests
+          TR
+            TD= row.timestamp.toLocaleString()
+            TD= row.mentorFullName
+            TD= row.candidateFullName
+            TD= row.mentorEmail
+            TD= row.requestEmailTimestamp && row.requestEmailTimestamp.toLocaleString()
+            TD
+              A(HREF= `requestDetailView/${row.requestHash}`) View
+
+    H1 #{approvedRequests.length} Approved Requests
+    if approvedRequests.length > 0
+      TABLE
+        TR
+          TH Created
+          TH Approved
+          TH Mentor
+          TH Candidate
+          TH Candidate Email
+          TH Detail
+
+        each row in approvedRequests
+          TR
+            TD= row.timestamp.toLocaleString()
+            TD= row.mentorSubmitTimeStamp.toLocaleString()
+            TD= row.mentorFullName
+            TD= row.candidateFullName
+            TD= row.candidateEmail
+            TD
+              A(HREF= `requestDetailView/${row.requestHash}`) View
+
+    H1 #{deniedRequests.length} Denied Requests
+    if deniedRequests.length > 0
+      TABLE
+        TR
+          TH Created
+          TH Denied
+          TH Mentor
+          TH Candidate
+          TH Candidate Email
+          TH Detail
+        each row in deniedRequests
+          TR
+            TD= row.timestamp.toLocaleString()
+            TD= row.mentorSubmitTimeStamp.toLocaleString()
+            TD= row.mentorFullName
+            TD= row.candidateFullName
+            TD= row.candidateEmail
+            TD
+              A(HREF= `requestDetailView/${row.requestHash}`) View
+
+    H1 #{revisedRequests.length} Revised Requests
+    if revisedRequests.length > 0
+      TABLE
+        TR
+          TH Created
+          TH Revised
+          TH Mentor
+          TH Candidate
+          TH Candidate Email
+          TH Detail
+        each row in revisedRequests
+          TR
+            TD= row.timestamp.toLocaleString()
+            TD= row.candidateReviseTimestamp.toLocaleString()
+            TD= row.mentorFullName
+            TD= row.candidateFullName
+            TD= row.candidateEmail
+            TD
+              A(HREF= `requestDetailView/${row.requestHash}`) View
+
+    H1 #{rolledRequests.length} Requests Rolled Over
+    if rolledRequests.length > 0
+      TABLE
+        TR
+          TH Created
+          TH Mentor
+          TH Candidate
+          TH Candidate Email
+          TH Detail
+        each row in rolledRequests
+          TR
+            TD= row.timestamp.toLocaleString()
+            TD= row.mentorFullName
+            TD= row.candidateFullName
+            TD= row.candidateEmail
+            TD
+              A(HREF= `requestDetailView/${row.requestHash}`) View
+

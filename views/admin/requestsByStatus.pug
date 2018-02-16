@@ -1,0 +1,44 @@
+doctype html
+html(lang='en')
+  head
+    TITLE CE Verification
+    LINK(rel="stylesheet" type="text/css" href=APP_URL + "styles.css")
+    LINK(rel="stylesheet" type="text/css" href=APP_URL + "LatoLatin/latolatinfonts.css")
+  body
+    H1 CE Verification
+    P
+      A(HREF= APP_URL + 'admin') Admin
+      |  | 
+      A(HREF= APP_URL + 'admin/createApprovalRequests') Create Approval Requests
+      |  | 
+      A(HREF= APP_URL + 'admin/linktests') Link Tests
+      |  | 
+      A(HREF= APP_URL + 'admin/impersonate') Impersonate
+
+    LABEL Status filter: 
+      SELECT(onChange="location.href = 'requests?status=' + this.value;")
+        each item in statusList
+          OPTION(VALUE=item SELECTED=(item === status))= item
+
+    H1 #{data.length} #{status} Request#{data.length == 1 ? '' : 's'}
+    if data.length > 0
+      TABLE.data
+        TR
+          TH Created
+          TH Candidate
+          TH Candidate Email
+          TH Mentor
+          TH Mentor Email
+          TH Email Timestamp
+          TH Detail
+        each row in data
+          TR
+            TD= row.timestamp.toLocaleString()
+            TD= row.candidateFullName
+            TD= row.candidateEmail
+            TD= row.mentorFullName
+            TD= row.mentorEmail
+            TD= row.requestEmailTimestamp && row.requestEmailTimestamp.toLocaleString()
+            TD
+              A(HREF= `requestDetailView/${row.requestHash}`) View
+

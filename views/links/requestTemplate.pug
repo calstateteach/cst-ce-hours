@@ -1,0 +1,76 @@
+doctype html
+html(lang='en')
+  head
+    block title
+      title CE Verification
+    STYLE.
+      th, td { padding: 3px; }
+      .borderClass { border: 1px solid black; border-collapse: collapse;}
+      .boldClass { font-weight: bold; }
+      .errorClass { font-weight: bold; color: red; }
+      .labelClass { vertical-align: text-top; }
+  body
+    block content_heading
+      H1 CE Verification Detail
+
+    TABLE
+      TR
+        TD Mentor:
+        TD.boldClass= data.mentorFullName
+      TR
+        TD Mentor email:
+        TD.boldClass= data.mentorEmail
+      TR
+        TD Candidate:
+        TD.boldClass= data.candidateFullName
+      TR
+        TD Candidate email:
+        TD.boldClass= data.candidateEmail
+    
+    P
+    TABLE.borderClass
+      TR
+        TH.borderClass Date
+        TH.borderClass Hours
+        TH.borderClass Activity
+        TH.borderClass Other participants
+
+      each activity in data.activityList
+        TR
+          TD.borderClass= activity.activityDate.toLocaleDateString()
+          TD.borderClass= activity.activityDurationAsString
+          TD.borderClass= activity.activityDescription
+          TD.borderClass= activity.otherParticipants
+    P
+    TABLE
+      TR
+        TD Total hours:
+        TD.boldClass= data.totalHours
+      TR
+        TD Approval state:
+        TD.boldClass= data.approvalState
+      if (data.approvalState === 'Approved')
+        TR
+          TD= data.approvalState + ' on:'
+          TD.boldClass= data.mentorSubmitTimeStamp.toLocaleString()
+      else if (data.approvalState === 'Denied')
+        TR
+          TD= data.approvalState + ' on:'
+          TD.boldClass= data.mentorSubmitTimeStamp.toLocaleString()
+        TR
+          TD Mentor's comment:
+          TD.boldClass= data.mentorComment
+      else if (data.approvalState === 'Revised')
+        TR
+          TD= data.approvalState + ' on:'
+          TD.boldClass= data.candidateReviseTimestamp.toLocaleString()
+        TR
+          TD Denied on:
+          TD.boldClass= data.mentorSubmitTimeStamp.toLocaleString()
+      TR
+        TD Created:
+        TD= data.timestamp.toLocaleString()
+      TR
+
+    block content_foot
+      P Footer goes here

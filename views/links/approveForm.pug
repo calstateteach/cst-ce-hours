@@ -1,0 +1,14 @@
+extends requestTemplate
+
+block content_heading
+  H1 CE Verification Detail
+
+  P Please review the following CE hours and approve or deny by clicking on the links below.
+  P
+    A(HREF= `${APP_URL}links/approve/${data.mentorSecret}`) Approve these hours
+  P
+    A(HREF= `${APP_URL}links/denyform/${data.mentorSecret}`) Deny these hours
+    
+
+block content_foot
+  P

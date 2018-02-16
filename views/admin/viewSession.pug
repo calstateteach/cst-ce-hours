@@ -1,0 +1,27 @@
+doctype html
+HTML(lang="en")
+  HEAD
+    LINK(rel="stylesheet" type="text/css" href=APP_URL + "styles.css")
+    TITLE View Session
+  BODY
+    H1 View Session
+    P
+      A(HREF= APP_URL + 'admin') Admin
+      |  | 
+      A(HREF= APP_URL + 'admin/requests') View Approval Requests
+      |  | 
+      A(HREF= APP_URL + 'admin/linktests') Link Tests
+      |  | 
+      A(HREF= APP_URL + 'admin/impersonate') Impersonate
+    TABLE.data
+      TR
+        TH Property
+        TH Value
+      - for (var obj in session)
+        TR
+          TD.boldClass= obj
+          TD= session[obj]
+
+    P
+      SMALL=(new Date()).toString()
+

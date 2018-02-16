@@ -1,0 +1,117 @@
+extends candidateLayout.pug
+block content
+  H2 Denied Approval Request
+  P Edit entries in denied approval request, then copy them back to the pool of entered hours.
+  TABLE
+    TR
+      TD Mentor:
+      TD.boldClass= request.mentorFullName
+    TR
+      TD Mentor email:
+      TD.boldClass= request.mentorEmail
+    TR
+      TD Candidate:
+      TD.boldClass= request.candidateFullName
+    TR
+      TD Candidate email:
+      TD.boldClass= request.candidateEmail
+
+  P
+  
+  TABLE.data
+    TR
+      TH Date
+      TH Hours
+      TH Activity
+      TH Other participants
+      TH Candidate type
+      TH(COLSPAN=2)
+
+    - var iLimit = request.activityList.length;
+    - for (var i = 0; i < iLimit; ++i)
+      - var activity = request.activityList[i];
+      - var ceHours = hours[i];
+      - var isDiff = diffs[i];
+      - var isDropped = hours[i] && (hours[i].approvalState === 'Dropped');
+    
+      //-Show hours data seen by mentor
+      TR
+        TD= activity.activityDate.toLocaleDateString()
+        TD= activity.activityDurationAsString
+        TD= activity.activityDescription
+        TD= activity.otherParticipants
+        TD= activity.candidateType
+        
+        if !isDiff && !isDropped
+          TD
+            FORM(action= APP_URL + "candidate/editHours" method="post")
+              INPUT(type='hidden' name='record_id' value=activity._id)
+              INPUT(type='hidden' name='redirectUrl' value=APP_URL + 'candidate/viewDenied/' + request.requestHash)
+              INPUT(type='submit' value='Edit')
+          TD
+            FORM(action= APP_URL + "candidate/dropHours" method="post")
+              INPUT(type='hidden' name='record_id' value=activity._id)
+              INPUT(type='hidden' name='redirectUrl' value=APP_URL + 'candidate/viewDenied/' + request.requestHash)
+              INPUT(type='submit' value='Delete')
+        else
+          //-CE Hours record missing for some reason
+          TD(COLSPAN=2)
+
+      //-Show hours data edited by teacher candidate
+      if isDiff || isDropped
+        - var backgroundColor = isDiff ? 'LightSteelBlue' : 'LightBlue';
+        - var backgroundColor = isDropped ? 'DarkCyan' : backgroundColor;
+        TR.edited(STYLE='background: ' + backgroundColor + '; font-style: italic;')
+          if ceHours
+            TD= ceHours.activityDate.toLocaleDateString()
+            TD= ceHours.activityDurationAsString
+            TD= ceHours.activityDescription
+            TD= ceHours.otherParticipants  
+            TD= ceHours.candidateType
+
+            TD
+              FORM(action= APP_URL + "candidate/editHours" method="post")
+                INPUT(type='hidden' name='record_id' value=activity._id)
+                INPUT(type='hidden' name='redirectUrl' value=APP_URL + 'candidate/viewDenied/' + request.requestHash)
+                INPUT(type='submit' value='Edit')
+
+            if isDropped
+              TD
+                FORM(action= APP_URL + "candidate/restoreHours" method="post")
+                  INPUT(type='hidden' name='record_id' value=activity._id)
+                  INPUT(type='hidden' name='redirectUrl' value=APP_URL + 'candidate/viewDenied/' + request.requestHash)
+                  INPUT(type='submit' value='Restore')
+            else
+              TD
+                FORM(action= APP_URL + "candidate/dropHours" method="post")
+                  INPUT(type='hidden' name='record_id' value=activity._id)
+                  INPUT(type='hidden' name='redirectUrl' value=APP_URL + 'candidate/viewDenied/' + request.requestHash)
+                  INPUT(type='submit' value='Delete')
+
+      TR
+        TD(COLSPAN="7" STYLE='background:lightgrey')
+
+  P
+  TABLE
+    TR
+      TD Total hours:
+      TD.boldClass= request.totalHours
+    TR
+      TD Approval state:
+      TD.boldClass= request.approvalState
+    if (request.approvalState != 'Pending')
+      TR
+        TD= request.approvalState + ' on:'
+        TD.boldClass= request.mentorSubmitTimeStamp.toLocaleString()
+      if (request.approvalState === 'Denied')
+        TR
+          TD Mentor's comment:
+          TD.boldClass= request.mentorComment
+    TR
+      TD Created:
+      TD= request.timestamp.toLocaleString()
+
+  P
+  FORM(action= APP_URL + 'candidate/resubmitHours' method='POST')
+    INPUT(type='hidden' name='requestHash' value=request.requestHash)
+    INPUT(type='submit' value='Copy hours back to pool of entered hours')

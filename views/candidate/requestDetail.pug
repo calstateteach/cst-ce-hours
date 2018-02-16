@@ -1,0 +1,66 @@
+extends candidateLayout.pug
+block content
+  H2 CE Verification Approval Request
+
+  TABLE
+    TR
+      TD Mentor:
+      TD.boldClass= data.mentorFullName
+    TR
+      TD Mentor email:
+      TD.boldClass= data.mentorEmail
+    TR
+      TD Candidate:
+      TD.boldClass= data.candidateFullName
+    TR
+      TD Candidate email:
+      TD.boldClass= data.candidateEmail
+
+  P
+  TABLE.data
+    TR
+      TH Date
+      TH Hours
+      TH Activity
+      TH Other participants
+      TH Candidate type
+
+    each activity in data.activityList
+      TR
+        TD= activity.activityDate.toLocaleDateString()
+        TD= activity.activityDurationAsString
+        TD= activity.activityDescription
+        TD= activity.otherParticipants
+        TD= activity.candidateType
+  P
+  TABLE
+    TR
+      TD Total hours:
+      TD.boldClass= data.totalHours
+    TR
+      TD Approval state:
+      TD.boldClass= data.approvalState
+
+    if (data.approvalState === 'Denied')
+      TR
+        TD Denied on:
+        TD.boldClass= data.mentorSubmitTimeStamp.toLocaleString()
+      TR
+        TD Mentor's comment:
+        TD.boldClass= data.mentorComment
+
+    if (data.approvalState === 'Revised')
+      TR
+        TD Revised on:
+        TD.boldClass= data.candidateReviseTimestamp.toLocaleString()
+      TR
+        TD Denied on:
+        TD.boldClass= data.mentorSubmitTimeStamp.toLocaleString()
+      TR
+        TD Mentor's comment:
+        TD.boldClass= data.mentorComment
+    
+    TR
+      TD Created:
+      TD= data.timestamp.toLocaleString()
+    TR

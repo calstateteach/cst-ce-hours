@@ -1,0 +1,24 @@
+extends candidateLayout.pug
+block content
+  H2 Approved Hours
+  if data.length > 0
+    if totalHours == 1
+      P #[B 1] CE hour has been approved by the mentor.
+    else
+      P #[B #{totalHours}] CE hours have been approved by the mentor.
+      TABLE.data
+        TR
+          TH Date
+          TH Activity
+          TH Duration
+          TH Other participants
+          TH Candidate type
+        for row in data
+          TR
+            TD= row.activityDate.toLocaleDateString()
+            TD= row.activityDescription
+            TD= row.activityDurationAsString
+            TD= row.otherParticipants
+            TD= row.candidateType
+  else
+    P No CE hours have been approved by the mentor.
